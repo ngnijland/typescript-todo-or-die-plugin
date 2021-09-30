@@ -3,8 +3,9 @@ node_modules/
 *.swp
 *.swo
 .DS_Store
-*.log
+*.map
 log.txt
 
 test-workspace
-lib
+e2e
+*.test.js
