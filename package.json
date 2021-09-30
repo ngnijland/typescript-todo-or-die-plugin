@@ -1,0 +1,42 @@
+{
+  "name": "typescript-todo-or-die-plugin",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "contributors": [
+    {
+      "name" : "Dylan Carver",
+      "email" : "dylc2770@gmail.com",
+      "url" : "http://dylancarver.dev/"
+    },
+    {
+      "name" : "Niek Nijland",
+      "email" : "ngnijland@gmail.com",
+      "url" : "http://nieknijland.nl/"
+    },
+    {
+      "name" : "Bogdan Nenu",
+      "email" : "bogdan.nenu@gmail.com",
+      "url" : "http://bogdannenu.com/"
+    }
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngnijland/typescript-todo-or-die-plugin.git"
+  },
+  "keywords": [
+    "typescript",
+    "plugin",
+    "todo",
+    "comments"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngnijland/typescript-todo-or-die-plugin/issues"
+  },
+  "homepage": "https://github.com/ngnijland/typescript-todo-or-die-plugin#readme"
+}
