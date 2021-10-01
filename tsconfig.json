@@ -9,5 +9,5 @@
     "sourceMap": true,
     "skipLibCheck": true
   },
-  "exclude": ["lib", "e2e", "node_modules", "test-workspace"]
+  "exclude": ["lib", "e2e", "node_modules", "test-workspace", "**/*.test.ts"]
 }
