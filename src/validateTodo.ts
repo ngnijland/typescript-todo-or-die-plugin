@@ -16,7 +16,7 @@ function after_date(date: string): Validation {
   if (now > dateParam) {
     return {
       error: true,
-      message: "It time to do it!",
+      message: "It's time to do it!",
     };
   }
 
