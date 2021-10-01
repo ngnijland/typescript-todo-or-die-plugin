@@ -1,3 +1,5 @@
+import { validateTodo } from "./validateTodo";
+
 function init(modules: {
   typescript: typeof import("typescript/lib/tsserverlibrary");
 }) {
@@ -49,6 +51,15 @@ function init(modules: {
             };
           }
 
+          const { error, message } = validateTodo(text);
+
+          if (!error) {
+            return {
+              diagnostics: acc.diagnostics,
+              characterCount: newLineLength,
+            };
+          }
+
           return {
             diagnostics: [
               ...acc.diagnostics,
@@ -56,7 +67,7 @@ function init(modules: {
                 file: doc,
                 start: acc.characterCount,
                 length: lineLength - 1,
-                messageText: `${acc.characterCount}`,
+                messageText: message || "",
                 category: ts.DiagnosticCategory.Error,
                 source: "tod",
                 code: 9999,
