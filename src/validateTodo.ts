@@ -1,9 +1,15 @@
 type DiagnosticError = {
-  error: boolean;
-  message?: string;
+  error: true;
+  message: string;
 };
 
-function after_date(date: string): DiagnosticError {
+type DiagnosticApproval = {
+  error: false;
+};
+
+type Validation = DiagnosticError | DiagnosticApproval;
+
+function after_date(date: string): Validation {
   const now = new Date();
   const dateParam = new Date(date);
 
@@ -23,7 +29,13 @@ const conditions = {
   after_date,
 };
 
-export function validateTodo(todo: string): DiagnosticError {
+export function validateTodo(todo: string): Validation {
+  if (!todo.startsWith("// TODO::")) {
+    return {
+      error: false,
+    };
+  }
+
   const condition = todo.substring(
     todo.indexOf("::") + 2,
     todo.lastIndexOf(":")

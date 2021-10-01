@@ -44,16 +44,9 @@ function init(modules: {
         ) => {
           const newLineLength = acc.characterCount + lineLength;
 
-          if (!text.startsWith("// TODO::")) {
-            return {
-              diagnostics: acc.diagnostics,
-              characterCount: newLineLength,
-            };
-          }
+          const validation = validateTodo(text);
 
-          const { error, message } = validateTodo(text);
-
-          if (!error) {
+          if (!validation.error) {
             return {
               diagnostics: acc.diagnostics,
               characterCount: newLineLength,
@@ -67,10 +60,10 @@ function init(modules: {
                 file: doc,
                 start: acc.characterCount,
                 length: lineLength - 1,
-                messageText: message || "",
+                messageText: validation.message,
                 category: ts.DiagnosticCategory.Error,
-                source: "tod",
-                code: 9999,
+                source: "TOD",
+                code: 666,
               },
             ],
             characterCount: newLineLength,
