@@ -19,6 +19,12 @@ This plugin requires a project with TypeScript setup.
 npm install --save-dev typescript-todo-or-die-plugin
 ```
 
+or
+
+```bash
+yarn add typescript-todo-or-die-plugin --dev
+```
+
 2. Add a plugins section to your tsconfig.json.
 
 ```json
