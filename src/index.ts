@@ -4,13 +4,9 @@ function init(modules: {
   const ts = modules.typescript;
 
   function create(info: ts.server.PluginCreateInfo) {
-    // Get a list of things to remove from the completion list from the config object.
-    // If nothing was specified, we'll just remove 'caller'
-    const whatToRemove: string[] = info.config.remove || ["caller"];
-
     // Diagnostic logging
     info.project.projectService.logger.info(
-      "I'm getting set up now! Check the log for this message."
+      "WELCOME TO TODO OR DIE, BE PREPARED TO SOLVE YOUR TODO COMMENTS!"
     );
 
     // Set up decorator object
@@ -23,29 +19,56 @@ function init(modules: {
       proxy[k] = (...args: Array<{}>) => x.apply(info.languageService, args);
     }
 
-    // Remove specified entries from completion list
-    proxy.getCompletionsAtPosition = (fileName, position, options) => {
-      const prior = info.languageService.getCompletionsAtPosition(
-        fileName,
-        position,
-        options
-      );
-      if (!prior) return;
+    proxy.getSemanticDiagnostics = (filename) => {
+      const prior = info.languageService.getSemanticDiagnostics(filename);
+      const doc = info.languageService.getProgram()?.getSourceFile(filename);
 
-      const oldLength = prior.entries.length;
-      prior.entries = prior.entries.filter(
-        (e) => whatToRemove.indexOf(e.name) < 0
-      );
-
-      // Sample logging for diagnostic purposes
-      if (oldLength !== prior.entries.length) {
-        const entriesRemoved = oldLength - prior.entries.length;
-        info.project.projectService.logger.info(
-          `Removed ${entriesRemoved} entries from the completion list`
-        );
+      if (!doc) {
+        return prior;
       }
 
-      return prior;
+      const lines = doc.text
+        .split("\n")
+        .map((line, index): [number, number, string] => [
+          index + 1,
+          line.length + 1,
+          line.trim(),
+        ]);
+
+      const { diagnostics } = lines.reduce(
+        (
+          acc: { diagnostics: ts.Diagnostic[]; characterCount: number },
+          [, lineLength, text]
+        ) => {
+          const newLineLength = acc.characterCount + lineLength;
+
+          if (!text.startsWith("// TODO::")) {
+            return {
+              diagnostics: acc.diagnostics,
+              characterCount: newLineLength,
+            };
+          }
+
+          return {
+            diagnostics: [
+              ...acc.diagnostics,
+              {
+                file: doc,
+                start: acc.characterCount,
+                length: lineLength - 1,
+                messageText: `${acc.characterCount}`,
+                category: ts.DiagnosticCategory.Error,
+                source: "tod",
+                code: 9999,
+              },
+            ],
+            characterCount: newLineLength,
+          };
+        },
+        { diagnostics: [], characterCount: 0 }
+      );
+
+      return [...prior, ...diagnostics];
     };
 
     return proxy;
