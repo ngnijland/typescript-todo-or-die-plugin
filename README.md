@@ -46,3 +46,11 @@ Param | Type | Description
 date | `dd-mm-yyyy` | Date after which an error will be shown.
 
 Show an error if today is after the given date
+
+## Contributors
+
+<a href="https://github.com/ngnijland/typescript-todo-or-die-plugin/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ngnijland/typescript-todo-or-die-plugin" />
+</a>
+
+Made with [contributors-img](https://contrib.rocks).
