@@ -6,7 +6,7 @@
 
 ```typescript
 // Will result in your editor showing an error: "It's time to do it!"
-// TODO::after_date("02-04-2022"): remove april fools code
+// TODO::after_date("02-04-2021"): remove april fools code
 ```
 
 ## Usage
