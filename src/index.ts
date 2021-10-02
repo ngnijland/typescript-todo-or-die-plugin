@@ -4,6 +4,10 @@ function init(modules: {
   typescript: typeof import("typescript/lib/tsserverlibrary");
 }) {
   const ts = modules.typescript;
+  const diagnosticCategories = {
+    warning: ts.DiagnosticCategory.Warning,
+    error: ts.DiagnosticCategory.Error
+  }
 
   function create(info: ts.server.PluginCreateInfo) {
     // Diagnostic logging
@@ -44,7 +48,7 @@ function init(modules: {
         ) => {
           const newLineLength = acc.characterCount + lineLength;
 
-          const validation = validateTodo(text);
+          const validation = validateTodo(text, info.config?.options);
 
           if (!validation.error) {
             return {
@@ -61,7 +65,7 @@ function init(modules: {
                 start: acc.characterCount,
                 length: lineLength - 1,
                 messageText: validation.message,
-                category: ts.DiagnosticCategory.Error,
+                category: diagnosticCategories[validation.category],
                 source: "TOD",
                 code: 666,
               },
