@@ -6,7 +6,7 @@
 
 ```typescript
 // Will result in your editor showing an error: "It's time to do it!"
-// TODO::after_date("02-04-2021"): remove april fools code
+// TODO::after_date("2021-04-02"): remove april fools code
 ```
 
 ## Usage
@@ -32,7 +32,12 @@ yarn add typescript-todo-or-die-plugin --dev
   "compilerOptions": {
     "plugins": [
       {
-        "name": "typescript-todo-or-die-plugin"
+        "name": "typescript-todo-or-die-plugin",
+        "options": {
+          "after_date": {
+            "warn": "1w"
+          }
+        }
       }
     ]
   }
@@ -49,9 +54,12 @@ The following conditions are available to use inside your `TODO` comments
 
 Param | Type | Description
 ---|---|---
-date | `dd-mm-yyyy` | Date after which an error will be shown.
+date | `yyyy-mm-dd` | Date after which an error will be shown.
 
 Show an error if today is after the given date
+
+##### Configuration options:
+- **warn?**: string | boolean (Ex: '1w'/'2d'/'30h'/true)
 
 ## Contributors
 
