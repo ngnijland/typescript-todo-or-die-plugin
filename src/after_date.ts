@@ -1,9 +1,12 @@
-import { ConfigOptions, Validation } from './types';
-import { getWarningPeriod } from './utils'
+import { ConfigOptions, Validation } from "./types";
+import { getWarningPeriod, isValidDate } from "./utils";
 
-export function after_date(date: string, options?: ConfigOptions): Validation {
-  const now = new Date().getTime() / 1000;
+const getAfterDateIssue = (
+  date: string,
+  options?: ConfigOptions
+): Validation => {
   const dateParam = new Date(date).getTime() / 1000;
+  const now = new Date().getTime() / 1000;
   const warningOption = options?.after_date?.warn;
 
   if (now > dateParam) {
@@ -20,6 +23,16 @@ export function after_date(date: string, options?: ConfigOptions): Validation {
       message: "Get ready, time is short!",
       category: "warning",
     };
+  }
+
+  return {
+    error: false,
+  };
+};
+
+export function after_date(date: string, options?: ConfigOptions): Validation {
+  if (isValidDate(date)) {
+    return getAfterDateIssue(date, options);
   }
 
   return {

@@ -7,14 +7,14 @@ const mockOptions = {
 };
 
 test("after_date works", () => {
-  const date = "1-08-2021";
+  const date = "2021-08-01";
   const res = after_date(date, mockOptions);
 
   expect(res.error).toBe(true);
 });
 
 test("after_date works without options", () => {
-  const date = "1-08-2021";
+  const date = "2021-08-01";
   const res = after_date(date);
 
   expect(res.error).toBe(true);

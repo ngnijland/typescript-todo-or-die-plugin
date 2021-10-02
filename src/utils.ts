@@ -6,6 +6,12 @@ const periods: Periods = {
   h: 3600,
 };
 
+export const isValidDate = (date: string): string | boolean => {
+  // this regex should work but it doesn't ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
+  const [year] = date.split('-')
+  return year.length === 4
+}
+
 export const isValidWarnOption = (option: string): string | boolean => {
   return option.match(/^\d+[w|d|h]$/) ? option : false;
 };

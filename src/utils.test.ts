@@ -1,4 +1,32 @@
-import { isValidWarnOption, parseWarnOption , getWarningPeriod } from './utils'
+import { isValidDate, isValidWarnOption, parseWarnOption , getWarningPeriod } from './utils'
+
+test("isValidDate", () => {
+  const date = "2021-12-05"
+  const res = isValidDate(date)
+
+  expect(res).toBe(true)
+})
+
+test("isValidDate invalidates wrong format", () => {
+  const date = "20-06-2021"
+  const res = isValidDate(date)
+
+  expect(res).toBe(false)
+})
+
+test("isValidDate invalidates no format", () => {
+  const date = "20062021"
+  const res = isValidDate(date)
+
+  expect(res).toBe(false)
+})
+
+test("isValidDate invalidates empty", () => {
+  const date = ""
+  const res = isValidDate(date)
+
+  expect(res).toBe(false)
+})
 
 test("isValidWarnOption validates", () => {
   const validWeeks = '1w'
