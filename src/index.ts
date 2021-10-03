@@ -1,3 +1,4 @@
+import { customAutoCompleteEntries } from "./customAutoCompleteEntries";
 import { validateTodo } from "./validateTodo";
 
 function init(modules: {
@@ -20,6 +21,22 @@ function init(modules: {
       // @ts-expect-error - JS runtime trickery which is tricky to type tersely
       proxy[k] = (...args: Array<{}>) => x.apply(info.languageService, args);
     }
+
+    // Include custom autocomplete entries
+    proxy.getCompletionsAtPosition = (fileName, position, options) => {
+      const prior = info.languageService.getCompletionsAtPosition(
+        fileName,
+        position,
+        options
+      );
+      if (!prior) {
+        return;
+      }
+
+      prior.entries = [...prior.entries, ...customAutoCompleteEntries];
+
+      return prior;
+    };
 
     proxy.getSemanticDiagnostics = (filename) => {
       const prior = info.languageService.getSemanticDiagnostics(filename);
