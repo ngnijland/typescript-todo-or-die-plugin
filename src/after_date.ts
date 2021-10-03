@@ -1,3 +1,4 @@
+import { DiagnosticCategory } from "typescript";
 import { ConfigOptions, Validation } from "./types";
 import { getWarningPeriod, isValidDate } from "./utils";
 
@@ -13,7 +14,7 @@ const getAfterDateIssue = (
     return {
       error: true,
       message: "It's time to do it!",
-      category: "error",
+      category: DiagnosticCategory.Error,
     };
   }
 
@@ -21,7 +22,7 @@ const getAfterDateIssue = (
     return {
       error: true,
       message: "Get ready, time is short!",
-      category: "warning",
+      category: DiagnosticCategory.Warning,
     };
   }
 

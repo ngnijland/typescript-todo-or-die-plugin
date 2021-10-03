@@ -1,3 +1,4 @@
+import { DiagnosticCategory } from "typescript";
 export type Conditions = {
   after_date: (param: string, options?: ConfigOptions) => Validation;
 };
@@ -5,7 +6,7 @@ export type Conditions = {
 export type DiagnosticError = {
   error: true;
   message: string;
-  category: "warning" | "error";
+  category: DiagnosticCategory;
 };
 
 export type DiagnosticApproval = {
