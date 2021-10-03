@@ -6,8 +6,10 @@ const periods: Periods = {
   h: 3600,
 };
 
-export const isValidDate = (date: string): string | boolean => {
-  // this regex should work but it doesn't ^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$
+export const isValidDate = (date: string): boolean => {
+  //const regex = new RegExp(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
+
+  //return regex.test(date)
   const [year] = date.split('-')
   return year.length === 4
 }
