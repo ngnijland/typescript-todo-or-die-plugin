@@ -46,6 +46,7 @@ yarn add typescript-todo-or-die-plugin --dev
 
 3. Add `TODO`'s with conditions to your codebase
 
+**Note**: If you're using Visual Studio Code, you'll have to run the "TypeScript: Select TypeScript Version" command and choose "Use Workspace Version", or click the version number next to "TypeScript" in the lower-right corner. Otherwise, VS Code will not be able to find your plugin.
 ## Conditions
 
 The following conditions are available to use inside your `TODO` comments
