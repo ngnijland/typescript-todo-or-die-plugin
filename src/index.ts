@@ -44,7 +44,11 @@ function init(modules: {
         ) => {
           const newLineLength = acc.characterCount + lineLength;
 
-          const validation = validateTodo(text, info.config?.options);
+          const validation = validateTodo({
+            todo: text,
+            options: info.config?.options,
+            additionalKeywords: info.config?.additionalKeywords,
+          });
 
           if (!validation.error) {
             return {

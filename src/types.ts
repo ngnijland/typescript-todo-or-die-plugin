@@ -22,3 +22,9 @@ export type ConfigOptions = {
 export type Validation = DiagnosticError | DiagnosticApproval;
 
 export type Periods = { w: number; d: number; h: number };
+
+export type ValidateTodo = {
+  additionalKeywords?: string[];
+  options?: ConfigOptions;
+  todo: string;
+};

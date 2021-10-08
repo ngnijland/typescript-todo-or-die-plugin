@@ -10,9 +10,9 @@ export const isValidDate = (date: string): boolean => {
   //const regex = new RegExp(/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/)
 
   //return regex.test(date)
-  const [year] = date.split('-')
-  return year.length === 4
-}
+  const [year] = date.split("-");
+  return year.length === 4;
+};
 
 export const isValidWarnOption = (option: string): string | boolean => {
   return option.match(/^\d+[w|d|h]$/) ? option : false;
@@ -39,4 +39,11 @@ export const getWarningPeriod = (warnOption: string | true): number => {
   return multipler * periods[interval];
 };
 
-
+export const startsWithKeyword = (
+  todo: string,
+  keywords: string[]
+): boolean => {
+  return keywords.some((keyword) => {
+    return todo.startsWith(`// ${keyword}::`);
+  });
+};
