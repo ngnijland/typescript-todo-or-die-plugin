@@ -1,4 +1,6 @@
+import * as path from "path";
 import { validateTodo } from "./validateTodo";
+import { getJsonFromFile } from "./utils";
 
 function init(modules: {
   typescript: typeof import("typescript/lib/tsserverlibrary");
@@ -25,6 +27,11 @@ function init(modules: {
       const prior = info.languageService.getSemanticDiagnostics(filename);
       const doc = info.languageService.getProgram()?.getSourceFile(filename);
 
+      const rootDir = info.project.getCurrentDirectory();
+      const packageJson = getJsonFromFile(
+        `${path.normalize(rootDir)}/package.json`
+      );
+
       if (!doc) {
         return prior;
       }
@@ -43,8 +50,12 @@ function init(modules: {
           [, lineLength, text]
         ) => {
           const newLineLength = acc.characterCount + lineLength;
+          const meta = {
+            options: info.config?.options,
+            packageJson,
+          };
 
-          const validation = validateTodo(text, info.config?.options);
+          const validation = validateTodo(text, meta);
 
           if (!validation.error) {
             return {
