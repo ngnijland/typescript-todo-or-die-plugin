@@ -11,7 +11,7 @@ export function validateTodo({
   options,
   todo,
 }: ValidateTodo): Validation {
-  const keywords = [
+  const keywords: string[] = [
     "TODO",
     "FIXME",
     ...(additionalKeywords ? additionalKeywords : []),
