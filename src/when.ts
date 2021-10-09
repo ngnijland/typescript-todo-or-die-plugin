@@ -124,8 +124,12 @@ const checkForWarnings =
             return acc;
           }
 
+          const shouldWarn =
+            parseInt(currentNumbers.join(""), 10) <
+            parseInt(matchNumbers.join(""));
+
           const isWarning =
-            idx === level &&
+            shouldWarn && idx === level &&
             compareForWarning(next, matchNumbers[idx] || 0, versionAhead);
 
           if (isWarning) {
