@@ -30,7 +30,7 @@ export type WhenConfig = {
 
 export type ValidateMetaData = {
   options: ConfigOptions;
-  packageJson: Record<string, any> | null;
+  packageJson: Record<string, unknown> | null;
 };
 
 export type Validation = DiagnosticError | DiagnosticApproval;

@@ -70,9 +70,9 @@ test("isValidWarnWhenOption validates", () => {
   const option2 = "2m";
   const option3 = "3p";
 
-  expect(isValidWarnWhenOption(option1)).toBe(option1);
-  expect(isValidWarnWhenOption(option2)).toBe(option2);
-  expect(isValidWarnWhenOption(option3)).toBe(option3);
+  expect(isValidWarnWhenOption(option1)).toBe(true);
+  expect(isValidWarnWhenOption(option2)).toBe(true);
+  expect(isValidWarnWhenOption(option3)).toBe(true);
 });
 
 test("isValidWarnWhenOption invalidates", () => {

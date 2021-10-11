@@ -25,8 +25,8 @@ export const isValidWarnOption = (option: string): string | boolean => {
   return option.match(/^\d+[w|d|h]$/) ? option : false;
 };
 
-export const isValidWarnWhenOption = (option: string): string | boolean => {
-  return option.match(/^\d+[M|m|p]$/) ? option : false;
+export const isValidWarnWhenOption = (option: string): boolean => {
+  return option.match(/^\d+[M|m|p]$/) ? true : false;
 };
 
 export const parseOption = (option: string): [number, string] => [
