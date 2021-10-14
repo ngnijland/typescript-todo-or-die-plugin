@@ -31,7 +31,9 @@ const getAfterDateIssue = (
   };
 };
 
-export function after_date(date: string, options?: ConfigOptions): Validation {
+export function after_date(param: string, options?: ConfigOptions): Validation {
+  const date = param.replace(/"|'/g, "").trim();
+
   if (isValidDate(date)) {
     return getAfterDateIssue(date, options);
   }

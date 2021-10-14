@@ -1,14 +1,15 @@
 import {
+  getSplitPackageVersion,
+  getWarningPeriod,
+  getWarningWhen,
   isValidDate,
   isValidWarnOption,
-  parseWarnOption,
-  getWarningPeriod,
   isValidWarnWhenOption,
   parseOption,
+  parseWarnOption,
   parseWarnWhenOption,
-  getWarningWhen,
-  getSplitPackageVersion,
-  pipe
+  pipe,
+  startsWithKeyword,
 } from "./utils";
 
 test("isValidDate", () => {
@@ -132,24 +133,45 @@ test("getWarningPeriod with interval option", () => {
   expect(res).toBe(3600);
 });
 
-test('getWarningWhen', () => {
-  const option1 = true
-  const option2 = '2m'
+test("startsWithKeyword returns true on lines that start with keywords", () => {
+  const keywords = ["TODO", "FIXME"];
 
-  expect(getWarningWhen(option1)).toStrictEqual([1, 2])
-  expect(getWarningWhen(option2)).toStrictEqual([2, 1])
-})
+  const validLine1 = "// TODO::after_date('2020-01-01'): fix me";
+  const validLine2 = "// FIXME::after_date('2020-01-01'): fix me";
 
-test('getSplitPackageVersion', () => {
-  const p = '1.2.3'
-  expect(getSplitPackageVersion(p)).toStrictEqual([1, 2, 3])
-})
+  const res1 = startsWithKeyword(validLine1, keywords);
+  const res2 = startsWithKeyword(validLine2, keywords);
 
-test('pipe', () => {
-  const fn1 = (a:  number, b: number) => a + b
-  const fn2 = (s:  number) => s*2
+  expect(res1).toBe(true);
+  expect(res2).toBe(true);
+});
 
-  const pipeline = pipe(fn1, fn2)
+test("startsWithKeyword returns false on lines that don't start with keywords", () => {
+  const keywords = ["TODO", "FIXME"];
+  const invalidLine = "// NOTAVALIDKEYWORD::after_date('2020-01-01'): fix me";
+  const res = startsWithKeyword(invalidLine, keywords);
 
-  expect(pipeline(1, 2)).toStrictEqual(6)
-})
+  expect(res).toBe(false);
+});
+
+test("getWarningWhen", () => {
+  const option1 = true;
+  const option2 = "2m";
+
+  expect(getWarningWhen(option1)).toStrictEqual([1, 2]);
+  expect(getWarningWhen(option2)).toStrictEqual([2, 1]);
+});
+
+test("getSplitPackageVersion", () => {
+  const p = "1.2.3";
+  expect(getSplitPackageVersion(p)).toStrictEqual([1, 2, 3]);
+});
+
+test("pipe", () => {
+  const fn1 = (a: number, b: number) => a + b;
+  const fn2 = (s: number) => s * 2;
+
+  const pipeline = pipe(fn1, fn2);
+
+  expect(pipeline(1, 2)).toStrictEqual(6);
+});

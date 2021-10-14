@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import { Periods, Levels } from "./types";
+import { spawnSync } from 'child_process';
 
 const periods: Periods = {
   w: 604800,
@@ -64,6 +65,15 @@ export const getWarningPeriod = (warnOption: string | true): number => {
   return multipler * periods[interval];
 };
 
+export const startsWithKeyword = (
+  todo: string,
+  keywords: string[]
+): boolean => {
+  return keywords.some((keyword) => {
+    return todo.startsWith(`// ${keyword}::`);
+  });
+};
+
 export const getWarningWhen = (warnOption: string | true): [number, number] => {
   if (warnOption === true) {
     return [1, levels["p"]];
@@ -73,7 +83,7 @@ export const getWarningWhen = (warnOption: string | true): [number, number] => {
 };
 
 export const getSplitPackageVersion = (version: string): number[] => {
-  return version.split(".").map(n => parseInt(n, 10));
+  return version.split(".").map((n) => parseInt(n, 10));
 };
 
 export const getJsonFromFile = (
@@ -90,10 +100,28 @@ export const getJsonFromFile = (
   }
 };
 
-export const pipe = <T extends any[]>(fn: (...args: T) => any, ...fns: Array<(a: any) => any>) => {
+export const pipe = <T extends any[]>(
+  fn: (...args: T) => any,
+  ...fns: Array<(a: any) => any>
+) => {
   const piped = fns.reduce(
     (prevFn, nextFn) => (value: any) => nextFn(prevFn(value)),
-    (value) => value,
-  )
-  return (...args: T) => piped(fn(...args))
+    (value) => value
+  );
+  return (...args: T) => piped(fn(...args));
+};
+
+export const getGitBranch = (): string | undefined => {
+  try {
+    const callResult = spawnSync('git',  ['rev-parse', '--abbrev-ref', 'HEAD'], {cwd: __dirname});
+    const { stdout, stderr } = callResult;
+
+    if (stderr.byteLength) {
+      return;
+    }
+
+    return stdout.byteLength ? stdout.toString().trim() : undefined;
+  } catch {
+    return undefined;
+  }
 }

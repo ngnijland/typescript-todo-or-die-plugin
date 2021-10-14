@@ -7,7 +7,9 @@
     "strict": true,
     "declaration": true,
     "sourceMap": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "exclude": ["lib", "e2e", "node_modules", "test-workspace", "**/*.test.ts"]
 }

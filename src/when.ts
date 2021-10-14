@@ -3,11 +3,11 @@ import {
   ConfigOptions,
   Validation,
   WhenConfig,
-  DiagnosticApproval,
+  ValidationApproval,
 } from "./types";
 import { getWarningWhen, getSplitPackageVersion, pipe } from "./utils";
 
-const noerror: DiagnosticApproval = {
+const noerror: ValidationApproval = {
   error: false,
 };
 
@@ -50,7 +50,7 @@ const checkEquality = (
       matchNumbers,
       state: {
         error: true,
-        message: `It's a match, fix it'! now on ${currentNumbers.join(".")}`,
+        message: `It's a match, fix it'! Now on ${currentNumbers.join(".")}`,
         category: DiagnosticCategory.Error,
       },
     };
@@ -80,7 +80,7 @@ const checkForErrors = (
           skip: true,
           validation: {
             error: true,
-            message: `Your package has arrived! now on ${currentNumbers.join(
+            message: `Your package has arrived! Now on ${currentNumbers.join(
               "."
             )}`,
             category: DiagnosticCategory.Error,
@@ -129,7 +129,8 @@ const checkForWarnings =
             parseInt(matchNumbers.join(""));
 
           const isWarning =
-            shouldWarn && idx === level &&
+            shouldWarn &&
+            idx === level &&
             compareForWarning(next, matchNumbers[idx] || 0, versionAhead);
 
           if (isWarning) {
