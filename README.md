@@ -12,7 +12,7 @@
 ```typescript
 // Will result in your editor showing an error:
 // "Your package has arrived! now on 4.5.1"
-// TODO::when("typescript", ">4.5.0"): check your types
+// FIXME::when("typescript", ">4.5.0"): check your types
 ```
 
 ## Usage
