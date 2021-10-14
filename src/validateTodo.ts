@@ -44,8 +44,6 @@ export function validateTodo(
         options: meta.options?.when,
       });
     }
-
-    return { error: false };
   }
   return { error: false };
 }
