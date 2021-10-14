@@ -54,8 +54,9 @@ function init(modules: {
             options: info.config?.options,
             packageJson,
           };
+          const additionalKeywords = info.config?.additionalKeywords;
 
-          const validation = validateTodo(text, meta);
+          const validation = validateTodo(text, meta, additionalKeywords);
 
           if (!validation.error) {
             return {

@@ -12,9 +12,8 @@
 ```typescript
 // Will result in your editor showing an error:
 // "Your package has arrived! now on 4.5.1"
-// TODO::when("typescript", ">4.5.0"): check your types
+// FIXME::when("typescript", ">4.5.0"): check your types
 ```
-
 
 ## Usage
 
@@ -47,7 +46,8 @@ yarn add typescript-todo-or-die-plugin --dev
           "when": {
             "warn": "1p"
           }
-        }
+        },
+        "additionalKeywords": ["FIX", "TODO_OR_DIE"]
       }
     ]
   }
@@ -57,39 +57,54 @@ yarn add typescript-todo-or-die-plugin --dev
 3. Add `TODO`'s with conditions to your codebase
 
 **Note**: If you're using Visual Studio Code, you'll have to run the "TypeScript: Select TypeScript Version" command and choose "Use Workspace Version", or click the version number next to "TypeScript" in the lower-right corner. Otherwise, VS Code will not be able to find your plugin.
+
 ## Conditions
 
 The following conditions are available to use inside your `TODO` comments
 
 ### `after_date(date)`
 
-Param | Type | Description
----|---|---
-date | `yyyy-mm-dd` | Date after which an error will be shown.
+| Param | Type         | Description                              |
+| ----- | ------------ | ---------------------------------------- |
+| date  | `yyyy-mm-dd` | Date after which an error will be shown. |
 
 Show an error if today is after the given date
 
 ##### Configuration options:
+
 - **warn?**: string | boolean (Ex: '1w'/'2d'/'30h'/true)
 
 Show a warning before the given date
 
 ### `when(package, version)`
 
-Param | Type | Description
----|---|---
-package | string | Package name to be tracked as defined in the package.json file.
-version | `>1.0.0` | A comparator (`>` or `=`) followed by the version to be matched
+| Param   | Type     | Description                                                     |
+| ------- | -------- | --------------------------------------------------------------- |
+| package | string   | Package name to be tracked as defined in the package.json file. |
+| version | `>1.0.0` | A comparator (`>` or `=`) followed by the version to be matched |
 
 Show an error when version is compared with the current version as defined in the
 `package.json` file.
 
 ##### Configuration options:
+
 - **warn?**: string | boolean (Ex: '1M'/'2m'/'4p'/true)
 
 Show a warning before the given version matching on M - major versions, m -
 minor versions, p - patches. Defaults to 1 patch ahead when `warn` option is present.
 
+## Additional keywords
+
+By default `TODO` & `FIXME` are valid keywords to use for your todo comments. Additional keywords can be added as shown here:
+
+```json
+"plugins": [
+  {
+    "name": "typescript-todo-or-die-plugin",
+    "additionalKeywords": ["FIX", "TODO_OR_DIE"]
+  }
+]
+```
 
 ## Contributors
 
