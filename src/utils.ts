@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import { Periods, Levels } from "./types";
+import { spawnSync } from 'child_process';
 
 const periods: Periods = {
   w: 604800,
@@ -109,3 +110,18 @@ export const pipe = <T extends any[]>(
   );
   return (...args: T) => piped(fn(...args));
 };
+
+export const getGitBranch = (): string | undefined => {
+  try {
+    const callResult = spawnSync('git',  ['rev-parse', '--abbrev-ref', 'HEAD'], {cwd: __dirname});
+    const { stdout, stderr } = callResult;
+
+    if (stderr.byteLength) {
+      return;
+    }
+
+    return stdout.byteLength ? stdout.toString().trim() : undefined;
+  } catch {
+    return undefined;
+  }
+}

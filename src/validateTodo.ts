@@ -1,11 +1,13 @@
 import { Validation, ValidateMetaData, Conditions } from "./types";
 import { after_date } from "./after_date";
 import { when } from "./when";
+import { on_branch } from "./on_branch";
 import { startsWithKeyword } from "./utils";
 
 const conditions: Conditions = {
   after_date,
   when,
+  on_branch
 };
 
 export function validateTodo(
@@ -43,6 +45,15 @@ export function validateTodo(
         pjson: meta.packageJson,
         options: meta.options?.when,
       });
+    }
+
+    if (condition.startsWith("on_branch")) {
+      const param = todo.substring(
+        todo.indexOf("(") + 1,
+        todo.lastIndexOf(")")
+      );
+
+      return conditions.on_branch(param);
     }
   }
   return { error: false };

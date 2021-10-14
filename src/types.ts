@@ -2,6 +2,7 @@ import { DiagnosticCategory } from "typescript";
 export type Conditions = {
   after_date: (param: string, options?: ConfigOptions) => Validation;
   when: (param: string, config: WhenConfig) => Validation;
+  on_branch: (param: string) => Validation;
 };
 
 export type DiagnosticError = {
