@@ -93,6 +93,14 @@ Show an error when version is compared with the current version as defined in th
 Show a warning before the given version matching on M - major versions, m -
 minor versions, p - patches. Defaults to 1 patch ahead when `warn` option is present.
 
+### `on_branch(branch_name)`
+
+| Param        | Type         | Description                                 |
+| ------------ | ------------ | ------------------------------------------- |
+| branch_name  | string       | Git branch, on which an error will be shown |
+
+Show an error if current git branch matches specified one
+
 ## Additional keywords
 
 By default `TODO` & `FIXME` are valid keywords to use for your todo comments. Additional keywords can be added as shown here:

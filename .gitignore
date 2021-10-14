@@ -5,6 +5,8 @@ node_modules/
 .DS_Store
 *.log
 log.txt
+.vscode
+.idea
 
 test-workspace
 lib
