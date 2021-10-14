@@ -1,8 +1,14 @@
 import {
+  getSplitPackageVersion,
   getWarningPeriod,
+  getWarningWhen,
   isValidDate,
   isValidWarnOption,
+  isValidWarnWhenOption,
+  parseOption,
   parseWarnOption,
+  parseWarnWhenOption,
+  pipe,
   startsWithKeyword,
 } from "./utils";
 
@@ -60,6 +66,33 @@ test("isValidWarnOption invalidates", () => {
   expect(result3).toBe(false);
 });
 
+test("isValidWarnWhenOption validates", () => {
+  const option1 = "1M";
+  const option2 = "2m";
+  const option3 = "3p";
+
+  expect(isValidWarnWhenOption(option1)).toBe(true);
+  expect(isValidWarnWhenOption(option2)).toBe(true);
+  expect(isValidWarnWhenOption(option3)).toBe(true);
+});
+
+test("isValidWarnWhenOption invalidates", () => {
+  const option1 = "reg";
+  const option2 = "";
+  const option3 = "3g";
+
+  expect(isValidWarnWhenOption(option1)).toBe(false);
+  expect(isValidWarnWhenOption(option2)).toBe(false);
+  expect(isValidWarnWhenOption(option3)).toBe(false);
+});
+
+test("parseOption", () => {
+  const dateOption = "20d";
+  const versionOption = "2M";
+  expect(parseOption(dateOption)).toStrictEqual([20, "d"]);
+  expect(parseOption(versionOption)).toStrictEqual([2, "M"]);
+});
+
 test("parseWarnOption", () => {
   const opt = "23h";
   const [multipler, interval] = parseWarnOption(opt);
@@ -74,6 +107,16 @@ test("parseWarnOption with wrong option", () => {
 
   expect(multipler).toBe(1);
   expect(interval).toBe("w");
+});
+
+test("parseWarnWhenOption", () => {
+  const option1 = "1M";
+  const option2 = "2m";
+  const option3 = "10p";
+
+  expect(parseWarnWhenOption(option1)).toStrictEqual([1, 0]);
+  expect(parseWarnWhenOption(option2)).toStrictEqual([2, 1]);
+  expect(parseWarnWhenOption(option3)).toStrictEqual([10, 2]);
 });
 
 test("getWarningPeriod with true", () => {
@@ -109,4 +152,26 @@ test("startsWithKeyword returns false on lines that don't start with keywords", 
   const res = startsWithKeyword(invalidLine, keywords);
 
   expect(res).toBe(false);
+});
+
+test("getWarningWhen", () => {
+  const option1 = true;
+  const option2 = "2m";
+
+  expect(getWarningWhen(option1)).toStrictEqual([1, 2]);
+  expect(getWarningWhen(option2)).toStrictEqual([2, 1]);
+});
+
+test("getSplitPackageVersion", () => {
+  const p = "1.2.3";
+  expect(getSplitPackageVersion(p)).toStrictEqual([1, 2, 3]);
+});
+
+test("pipe", () => {
+  const fn1 = (a: number, b: number) => a + b;
+  const fn2 = (s: number) => s * 2;
+
+  const pipeline = pipe(fn1, fn2);
+
+  expect(pipeline(1, 2)).toStrictEqual(6);
 });
