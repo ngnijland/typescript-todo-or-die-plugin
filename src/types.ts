@@ -52,6 +52,12 @@ export type Validation = ValidationError | ValidationApproval;
 
 export type Periods = { w: number; d: number; h: number };
 
+export type ValidateTodo = {
+  additionalKeywords?: string[];
+  options?: ConfigOptions;
+  todo: string;
+};
+
 export type Levels = {
   M: number;
   m: number;
