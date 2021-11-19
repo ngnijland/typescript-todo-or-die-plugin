@@ -17,6 +17,8 @@
 
 ## Usage
 
+### Run as language server plugin
+
 This plugin requires a project with TypeScript setup.
 
 1. Install dependency
@@ -57,6 +59,18 @@ yarn add typescript-todo-or-die-plugin --dev
 3. Add `TODO`'s with conditions to your codebase
 
 **Note**: If you're using Visual Studio Code, you'll have to run the "TypeScript: Select TypeScript Version" command and choose "Use Workspace Version", or click the version number next to "TypeScript" in the lower-right corner. Otherwise, VS Code will not be able to find your plugin.
+
+### Run in command line
+
+1. Follow steps 1 and 2 from ["Run as language server plugin"](#run-as-language-server-plugin)
+
+2. Run in command line:
+
+```bash
+tod <file|dir|glob...>
+```
+
+3. All errors and warnings in the given range of files are outputted to the terminal. When there is at least one error the process will exit with code 1. In the ci the process will exit with code 1 when there is at least one warning.
 
 ## Conditions
 

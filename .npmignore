@@ -9,3 +9,4 @@ log.txt
 test-workspace
 e2e
 *.test.js
+coverage

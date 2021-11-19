@@ -1,14 +1,25 @@
 import { DiagnosticCategory } from "typescript";
+
 export type Conditions = {
   after_date: (param: string, options?: ConfigOptions) => Validation;
   when: (param: string, config: WhenConfig) => Validation;
   on_branch: (param: string) => Validation;
 };
 
-export type DiagnosticError = {
+export type ValidationError = {
+  category: DiagnosticCategory;
   error: true;
   message: string;
-  category: DiagnosticCategory;
+};
+
+export type ValidationApproval = {
+  error: false;
+};
+
+export type DiagnosticError = ValidationError & {
+  condition: string;
+  line: string;
+  lineNumber: number;
 };
 
 export type DiagnosticApproval = {
@@ -29,12 +40,15 @@ export type WhenConfig = {
   options?: ConfigOptions["when"];
 };
 
-export type ValidateMetaData = {
-  options: ConfigOptions;
+export type ValidateContext = {
+  options?: ConfigOptions;
   packageJson: Record<string, unknown> | null;
+  keywords: string[];
 };
 
-export type Validation = DiagnosticError | DiagnosticApproval;
+export type Diagnostic = DiagnosticError | DiagnosticApproval;
+
+export type Validation = ValidationError | ValidationApproval;
 
 export type Periods = { w: number; d: number; h: number };
 
