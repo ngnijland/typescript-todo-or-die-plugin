@@ -65,6 +65,6 @@
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "27.4.7",
     "prettier": "^2.4.1",
-    "ts-jest": "^27.0.5"
+    "ts-jest": "27.1.3"
   }
 }
